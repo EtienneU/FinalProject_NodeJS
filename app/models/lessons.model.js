@@ -1,10 +1,11 @@
+// Ici, c'est mon modèle Sequelize, qui serviva à définir les tables de ma DB
 module.exports = (sequelize, Sequelize) => {
-    const Student = sequelize.define("lesson", {
+    const Lesson = sequelize.define("lesson", {
    id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER, // On utilise Sequelize (Majuscule) pour accéder aux méthodes DataTypes !
         primaryKey: true,
         autoIncrement: true
-     },
+    },
     title: {
       type: Sequelize.STRING
     },
@@ -13,22 +14,19 @@ module.exports = (sequelize, Sequelize) => {
     },
     description: {
       type: Sequelize.TEXT
-        },
+    },
     teacher: {
-    type : Sequelize.STRING
-      },
-     file_name: {
-    type : Sequelize.STRING
-        },
-        starting_date: {
-            type:Sequelize.DATE
-        
-        },
-        ending_date: {
-            type:Sequelize.DATE
-        }
-        
-
+      type : Sequelize.STRING
+    },
+    file_name: {
+      type : Sequelize.STRING
+    },
+    starting_date: {
+      type:Sequelize.DATE
+    },
+    ending_date: {
+      type:Sequelize.DATE
+    }    
   });
-  return Student;
+  return Lesson;
 };

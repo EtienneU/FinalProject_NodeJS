@@ -1,3 +1,4 @@
+// classe Lesson que l'on utilisera en JS pour manipuler des objets Lesson
 class Lesson {
     constructor(id, title, hours, description,teacher,file_name, starting_date, ending_date, is_finished) {
         this.id = id;

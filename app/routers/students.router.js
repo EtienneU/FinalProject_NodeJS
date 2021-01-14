@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const studentController = require('../controller/students.controller');
+const studentController = require('../controllers/students.controller');
 
 
 // cet endpoint n'est accessible que pour les utilisateurs authentifiés: dans req.headers['x-access-token'], le token est valide

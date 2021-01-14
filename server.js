@@ -1,5 +1,4 @@
-
-// importer body-parser et express
+// import des modules express, body-parser et nos exports locaux
 var express = require('express');
 var bodyParser = require('body-parser');
 var students = require('./app/routers/students.router.js');
@@ -9,8 +8,10 @@ const db = require("./app/models/db");
 
 //créer une application express
 let app = express();
-//ajouter bodyParser comme middleware
+
+//ajout de bodyParser comme middleware
 app.use(bodyParser.json())
+
 app.use(function (req, res, next) {
     res.header(
         "Acess-Control-Allow-Headers",
@@ -24,6 +25,10 @@ app.use('/lessons', lessons);
 app.use('/auth', users);
 
 db.sequelize.sync();
+// Pour supprimer et écraser la base de donnée (utile en mode dev mais interdit en mode prod) : 
+// db.sequelize.sync({force : true}); 
 
 //lancer le serveur sur le port 3000
-app.listen(3000);
+app.listen(3000, () => {
+    console.log(`---> serveur lancé ! =) `);
+});

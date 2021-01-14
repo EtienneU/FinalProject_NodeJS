@@ -1,7 +1,7 @@
 
 var express = require('express');
 var router = express.Router();
-const lessonController = require('../controller/lessons.controller');
+const lessonController = require('../controllers/lessons.controller');
 
 
 
