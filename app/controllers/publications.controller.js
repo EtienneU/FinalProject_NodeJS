@@ -90,6 +90,5 @@ exports.remove = async (req, res) => {
             res.status(500)
             res.json({ "message": e });
         }
-
     }
 }

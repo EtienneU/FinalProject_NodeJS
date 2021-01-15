@@ -1,30 +1,33 @@
 // import des modules express, body-parser et nos exports locaux
-var express = require('express');
-var bodyParser = require('body-parser');
-var students = require('./app/routers/students.router.js');
-var lessons = require('./app/routers/lessons.router');
-var users = require('./app/routers/users.router');
-const db = require("./app/models/db");
+const express = require('express');
+const bodyParser = require('body-parser');
+// const students = require('./app/routers/students.router.js');
+// const lessons = require('./app/routers/lessons.router');
+// const users = require('./app/routers/users.router');
+// ici je ne require qu'une partie de l'objet exporté par db.js
+const { initDB } = require("./app/models/db");
 
-//créer une application express
-let app = express();
+// créer une application express
+const app = express();
 
-//ajout de bodyParser comme middleware
+// ajout de bodyParser comme middleware
 app.use(bodyParser.json())
 
-app.use(function (req, res, next) {
-    res.header(
-        "Acess-Control-Allow-Headers",
-        "x-acess-token,Origin, Content-type, Accept"
-    );
-    next();
-})
+// Lancement de ma synchronisation avec ma DB
+initDB();
 
-app.use('/students', students);
-app.use('/lessons', lessons);
-app.use('/auth', users);
+// app.use(function (req, res, next) {
+//     res.header(
+//         "Acess-Control-Allow-Headers",
+//         "x-acess-token,Origin, Content-type, Accept"
+//     );
+//     next();
+// })
 
-db.sequelize.sync();
+// app.use('/students', students);
+// app.use('/lessons', lessons);
+// app.use('/auth', users);
+
 // Pour supprimer et écraser la base de donnée (utile en mode dev mais interdit en mode prod) : 
 // db.sequelize.sync({force : true}); 
 

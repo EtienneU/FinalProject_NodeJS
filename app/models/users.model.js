@@ -6,10 +6,12 @@ module.exports = (sequelize, Sequelize) => {
         autoIncrement: true
      },
     email: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      allowNull: false // j'oblige mon champ a ne jamais être nul
     },
     password: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      allowNull: false // j'oblige mon champ a ne jamais être nul
     },
   });
   return User;

@@ -3,6 +3,7 @@ const Lesson = db.lessons;
 const lessonsService = require("../services/lessons.services");
 
 // Recupération de toutes mes Lessons
+// Je pars de l'hypothèse que les Lessons sont publiquement accessibles (pas de token requis pour getAll)
 exports.getAll = async (req, res) => {
     try {
         let result = await Lesson.findAll();

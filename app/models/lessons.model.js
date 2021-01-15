@@ -2,9 +2,9 @@
 module.exports = (sequelize, Sequelize) => {
     const Lesson = sequelize.define("lesson", {
    id: {
-        type: Sequelize.INTEGER, // On utilise Sequelize (Majuscule) pour accéder aux méthodes DataTypes !
-        primaryKey: true,
-        autoIncrement: true
+      type: Sequelize.INTEGER, // On utilise Sequelize (Majuscule) pour accéder aux méthodes DataTypes !
+      primaryKey: true,
+      autoIncrement: true
     },
     title: {
       type: Sequelize.STRING
@@ -15,9 +15,6 @@ module.exports = (sequelize, Sequelize) => {
     description: {
       type: Sequelize.TEXT
     },
-    teacher: {
-      type : Sequelize.STRING
-    },
     file_name: {
       type : Sequelize.STRING
     },
@@ -26,7 +23,7 @@ module.exports = (sequelize, Sequelize) => {
     },
     ending_date: {
       type:Sequelize.DATE
-    }    
+    }
   });
   return Lesson;
 };
