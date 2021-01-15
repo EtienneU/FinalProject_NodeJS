@@ -1,12 +1,9 @@
-let db = require("../models/db");
-let jwt = require("../services/auth.services");
-let User = db.users;
-
+const { User } = require('../models/db');
+// const jwt = require("../services/auth.services");
 
 exports.login = async (req, res) => {
 
     try {
-
         //trouver le user avec le parametre email == req.body.email
         const user = await User.findOne({ where: { email: req.body.email } });
 
@@ -15,7 +12,6 @@ exports.login = async (req, res) => {
             res.json({ "message": "Aucun utilisateur n'existe avec cet email" })
             return;
         }
-
 
         if (req.body.password == user.dataValues.password) {
         
@@ -28,21 +24,15 @@ exports.login = async (req, res) => {
                 token : token
             });
 
-
-
         } else {
             res.status(401);
             res.json({ "message": "Le mot de passe est erroné" })
         }
 
-
-
-
     } catch (e) {
         res.status(500);
             res.json({ "message": e })
     }
-   
 }
 
 

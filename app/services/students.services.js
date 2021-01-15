@@ -1,13 +1,19 @@
+const getAge = (birth_day) => {
+    const birth_date = new Date(birth_day);
+    const today = new Date();
+    let age = today.getFullYear() - birth_date.getFullYear();
+    let moisDiff = today.getMonth() - birth_date.getMonth();
+    if(moisDiff < 0 || (moisDiff === 0 && today.getDate() < birth_date.getDate())) age--;
+    return age;
 
-exports.getYears = (date2) =>{
-let years = new Date().getFullYear() - new Date(date2).getFullYear();
-let month = new Date().getMonth() - new Date(date2).getMonth();
-let dateDiff = new Date().getDay() - new Date(date2).getDay();
-if (dateDiff < 0) {
-    month -= 1;
+    // const years     = new Date().getFullYear() - new Date(birthDay).getFullYear();
+    // const monthDiff = new Date().getMonth()    - new Date(birthDay).getMonth();
+    // const dateDiff  = new Date().getDay()      - new Date(birthDay).getDay();
+    // if (dateDiff < 0)  monthDiff--;
+    // if (monthDiff < 0) years--;
+    // return years;
 }
-if (month < 0) {
-    years -= 1;
-}
-return years;
+
+module.exports = {
+    getAge
 }
