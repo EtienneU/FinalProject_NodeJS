@@ -7,7 +7,10 @@ module.exports = (sequelize, Sequelize) => {
      },
     email: {
       type: Sequelize.STRING,
-      allowNull: false // j'oblige mon champ a ne jamais être nul
+      allowNull: false, // j'oblige mon champ a ne jamais être nul
+      unique : {
+        msg:  `Cet e-mail est déjà utilisé.`
+      }
     },
     password: {
       type: Sequelize.STRING,

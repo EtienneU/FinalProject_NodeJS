@@ -31,7 +31,7 @@ const initDB = () => {
   // sequelize.sync() retourne une Promise
   // {force : true} est interdit en mode prod, mais pratique en mode dev
   // {force : true} me permet de RESET la DB (DROP IF EXISTS)
-  return sequelize.sync({force : true}) 
+  return sequelize.sync({force : true})  //
     .then (_ => {
       console.log("Connection à la DB réussie");
       // Pour reinitialiser ma BD : activer {force : true} dans sync() et activer mes map ci dessous
@@ -44,6 +44,7 @@ const initDB = () => {
         user.password = bcrypt.hashSync(user.password, 5) // MAJ de password en crypté
         User.create(user);
       });
+
     })
     .catch (error => {
       console.log("Erreur - connexion échouée DB" + error);

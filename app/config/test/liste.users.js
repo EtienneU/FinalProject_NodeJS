@@ -1,19 +1,23 @@
 module.exports = users = 
 [
     {
-        "email" : "Sylvain.lardiere@gmail.com",
-        "password" : "sylvain"
+        "email" : "melanie.martin@gmail.com",
+        "password" : "melanie"
     },
     {
-        "email" : "quentin.lardiere@gmail.com",
+        "email" : "quentin.delaville@gmail.com",
         "password" : "quentin"
     },
     {
-        "email" : "clement.lardiere@gmail.com",
-        "password" : "clement"
+        "email" : "sophie.marceau@gmail.com",
+        "password" : "sophie"
     },
     {
-        "email" : "lucie.lardiere@gmail.com",
+        "email" : "lucie.glow@gmail.com",
         "password" : "lucie"
+    },
+    {
+        "email" : "hugo.ricin@gmail.com",
+        "password" : "hugo"
     }
 ]
