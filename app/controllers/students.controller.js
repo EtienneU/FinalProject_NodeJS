@@ -8,38 +8,6 @@ const erreurCall = require('../services/call.services');
 // const studentsService = require('../services/students.services')
 
 exports.getAll = async (req, res) => {
-   // //recuperation du token du header
-   // let token = req.headers['x-access-token'];
-
-   // //verification de la validité du token
-   // let verifytoken = jwt.verifyToken(token);
-
-   // if (!verifytoken) {
-   //    //si token n'est pas valide : utilisateur non authentifié
-   //       res.status(401);
-   //       res.json({ "message":" Accés interdit " });
-   // } else {
-   //    //si token est valide : utilisateur authentifié
-   //    try {
-   //       let resp = await Student.findAll();
-       
-   //       console.log(resp);
-
-   //       let newResult = resp.map((result) => {
-   //          let age = studentsService.getYears(result.dataValues.birthdate)
-   //          console.log(age);
-   //          console.log(result);
-   //          //importer le service
-   //          return new StudentC(result.dataValues.id, result.dataValues.first_name, result.dataValues.last_name, result.dataValues.birthdate, result.dataValues.bio, result.dataValues.class_name, age)
-   //       });
-
-   //       res.json(newResult);
-   //    } catch (e) {
-   //       res.json(500);
-   //       res.json({ error: e });
-   //    }
-   // }
-
    try {
       let studentList = await Student.findAll();
       // console.log(resp);

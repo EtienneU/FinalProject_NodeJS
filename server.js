@@ -3,7 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const users = require('./app/routers/users.router');
 const students = require('./app/routers/students.router.js');
-// const lessons = require('./app/routers/lessons.router');
+const lessons = require('./app/routers/lessons.router');
 // ici je ne require qu'une partie de l'objet exporté par db.js
 const { initDB } = require("./app/models/db");
 
@@ -27,7 +27,7 @@ initDB();
 // Terminer par l'appel de mes routers
 app.use('/', users);
 app.use('/students', students);
-// app.use('/lessons', lessons);
+app.use('/lessons', lessons);
 
 
 //lancer le serveur sur le port 3000

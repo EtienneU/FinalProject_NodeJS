@@ -9,6 +9,7 @@ const lessonModel   = require('./lessons.model');
 // J'importe mes tableaux d'entité qui me servent à insérer quelques lignes en DB
 const listeEtudiants  = require('../config/test/liste.etudiants');
 const listeUsers      = require('../config/test/liste.users');
+const listeLessons    = require('../config/test/liste.lessons');
 
 const sequelize = new Sequelize(
   dbConfig.DB, 
@@ -16,9 +17,9 @@ const sequelize = new Sequelize(
   dbConfig.PASSWORD,
   {
     host: dbConfig.HOST,
-    dialect: 'mysql'
+    dialect: 'mysql',
     //timestamp : false  //supprime les champs createdAt et updatedAt dans chaque table
-    // logging : false   // pour supprimer les log liés à Sequelize (création de tables etc)
+    logging : false   // pour supprimer les log liés à Sequelize (création de tables, insertions etc)
   }
 );
 
@@ -37,12 +38,12 @@ Student.hasOne(User); // Student.hasOne(User, {foreignKey: "EtudiantId"}) pour m
 User.belongsTo(Student);
 
 // //création de la relation (One-to-Many) entre mes entités Lessons et Publications
-// db.lessons.hasMany(db.publications);
-// db.publications.belongsTo(db.lessons);
+// Lessons.hasMany(Publications);
+// Publications.belongsTo(Lessons);
 
 // // table intermédiaire pour les relations Many-to-many
-// db.students.belongsToMany(db.lessons, { through: 'LessonStudents' }); 
-// db.lessons.belongsToMany(db.students, { through: 'LessonStudents' });
+// Student.belongsToMany(Lessons, { through: 'LessonStudents' }); 
+// Lessons.belongsToMany(Student, { through: 'LessonStudents' });
 
 // initialisation de ma DB
 const initDB = () => {
@@ -53,7 +54,6 @@ const initDB = () => {
     .then (_ => {
       console.log("Connection à la DB réussie");
       // Pour reinitialiser ma BD : activer {force : true} dans sync() et activer mes map ci dessous
-      // Ajout d'étudiants dans la table student : je parcours mon tableau d'étudiants à insérer dans ma BD
 
       listeEtudiants.map(student => {
         Student.create(student);
@@ -61,6 +61,9 @@ const initDB = () => {
       listeUsers.map(user => {
         user.password = bcrypt.hashSync(user.password, 5) // MAJ de password en crypté
         User.create(user);
+      });
+      listeLessons.map(lesson => {
+        Lesson.create(lesson);
       });
 
     })
