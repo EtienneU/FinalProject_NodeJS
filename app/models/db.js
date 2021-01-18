@@ -17,6 +17,7 @@ const sequelize = new Sequelize(
   {
     host: dbConfig.HOST,
     dialect: 'mysql'
+    //timestamp : false  //supprime les champs createdAt et updatedAt dans chaque table
     // logging : false   // pour supprimer les log liés à Sequelize (création de tables etc)
   }
 );

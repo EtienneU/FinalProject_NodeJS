@@ -29,6 +29,9 @@ module.exports = (sequelize, Sequelize) => {
     profile_picture : {
       type: Sequelize.TEXT
     }
+  },
+  {
+    timestamps : false // supprime la gestion automatique de sequelize pour les champs (createdAt, updatedAt)
   });
   return Student;
 };

@@ -16,6 +16,9 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       allowNull: false // j'oblige mon champ a ne jamais être nul
     },
+  },
+  {
+    timestamps : false // supprime la gestion automatique de sequelize pour les champs (createdAt, updatedAt)
   });
   return User;
 };

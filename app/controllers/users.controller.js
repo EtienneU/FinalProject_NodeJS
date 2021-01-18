@@ -29,7 +29,10 @@ exports.login = async (req, res, userRegister = null, messageRegister = null) =>
             }
 
             // ok : on retourne le user et le token associé à sa connexion
-            const token = jwt.sign({userId : user.id}, privateKey.privateKey, {expiresIn : '12h'});
+            const token = jwt.sign(
+                {userId : user.id}, 
+                privateKey.privateKey, 
+                {expiresIn : '24h'});
             // let student = await user.getStudent() // si l'association User-Student existe
             const message = (typeof messageRegister === "string") ? messageRegister : `Identification réussie - Récupérer le token pour vos futures requetes sur l'API`;
             res.json({ message, data: user, token});
@@ -73,3 +76,16 @@ exports.register = async (req, res) => {
     }
 }
 
+// 
+exports.getInfo = async (req, res) => {
+   
+    try {
+        const id = res.locals.id;
+        const user = await User.findByPk(id);
+        // pas besoin de vérifier si notre utilisateur existe. On sait qu'il existe car on l'a fait précédemment
+        const message = `Récupération de vos infos.`;
+        res.json({ message, user });
+    } catch (error) {
+        erreurCall(error, res);
+    }
+}
