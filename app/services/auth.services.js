@@ -2,13 +2,14 @@ const jwt = require('jsonwebtoken');
 const privateKey = require('../config/privatekey');
 const { User } = require('../models/db');
 
+// Pour protéger chaque endpoint qui nécessite une authentification
 module.exports = async (req, res, next) => {
     console.log(`Requete pour page protégée`);
     const token = req.headers["x-access-token"];
 
     // controle : token fourni ?
     if (!token) {
-        const message = `Token non fourni. Fournir un token`;
+        const message = `Token non fourni. Vous devez vous connecter pour accéder à ce contenu`;
         return res.status(401).json({message});
     }
     

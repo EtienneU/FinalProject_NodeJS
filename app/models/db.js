@@ -23,9 +23,26 @@ const sequelize = new Sequelize(
 );
 
 // Si ça fonctionne pas avec DataTypes, remplacer par Sequelize (avec Majuscule)
+// On fait appel à chacun de nos modèles d'entité avec les 2 paramètres (l'ordre est important)
 const User = userModel(sequelize, DataTypes);  
 const Student = studentModel(sequelize, DataTypes);
 const Lesson = lessonModel(sequelize, DataTypes);
+
+// création de la relation (One-to-one) entre mes entités User et Student
+// Source --> Cible. Student est la source qui vise la cible User. Une clé étrangère se crée au niveau de la cible
+Student.hasOne(User); // Student.hasOne(User, {foreignKey: "EtudiantId"}) pour modifier le nom de ma FK
+// Je crée une clé étrangère dans la source.
+// avec le mot clé belongsTo, la référence de la cible disparaît si la source est supprimée (mais pas la cible)
+// Avec ces relations, de nouvelles méthodes sont accessibles ! Comme Student.getUser()
+User.belongsTo(Student);
+
+// //création de la relation (One-to-Many) entre mes entités Lessons et Publications
+// db.lessons.hasMany(db.publications);
+// db.publications.belongsTo(db.lessons);
+
+// // table intermédiaire pour les relations Many-to-many
+// db.students.belongsToMany(db.lessons, { through: 'LessonStudents' }); 
+// db.lessons.belongsToMany(db.students, { through: 'LessonStudents' });
 
 // initialisation de ma DB
 const initDB = () => {
@@ -51,24 +68,6 @@ const initDB = () => {
       console.log("Erreur - connexion échouée DB" + error);
     })
 }
-
-// On fait appel à chacun de nos modèles d'entité avec les 2 sequelize passés en paramètre (l'ordre est important)
-// db.students = require("./students.model")(db.sequelize, Sequelize);
-// db.lessons = require("./lessons.model")(db.sequelize, db.Sequelize);
-// db.users = require("./users.model")(db.sequelize, db.Sequelize);
-// db.publications = require('./publications.model')(db.sequelize, db.Sequelize);
-
-//création de la relation (One-to-one) entre mes entités Users et Students
-// db.students.hasOne(db.users);
-// db.users.belongsTo(db.students);
-
-// //création de la relation (One-to-Many) entre mes entités Lessons et Publications
-// db.lessons.hasMany(db.publications);
-// db.publications.belongsTo(db.lessons);
-
-// // table intermédiaire pour les relations Many-to-many
-// db.students.belongsToMany(db.lessons, { through: 'LessonStudents' }); 
-// db.lessons.belongsToMany(db.students, { through: 'LessonStudents' });
 
 module.exports = {
   initDB, Student, User, Lesson

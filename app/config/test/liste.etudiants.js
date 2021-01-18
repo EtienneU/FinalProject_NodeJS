@@ -1,7 +1,7 @@
 module.exports = etudiants = [
     {
-        "first_name" : "Sylvain",
-        "last_name" : "Lardiere", 
+        "first_name" : "Corine",
+        "last_name" : "Dufin", 
         "birthdate" : "2000-01-06",
         "bio" :  "Top of the pop !",
         "class_name" : "2B"

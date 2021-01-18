@@ -4,6 +4,20 @@ const { User } = require('../models/db');
 const erreurCall = require('../services/call.services');
 const privateKey = require('../config/privatekey');
 const { checkDuplicateEmail } = require('../services/user.services');
+const studentMethodes = require ('../controllers/students.controller');
+
+exports.createProfile = async (req, res) => {
+    try {
+        const user = await User.findByPk(res.locals.id);
+        // on crée notre Student associé à notre profil user
+        const userProfile = await studentMethodes.create(req, res); // ici c'est la méthode create de mon userController et non le create de Sequelize
+        await user.setStudent(userProfile);
+        const message = `Votre profil étudiant vient d'être créé.`;
+        res.json({ message, newStudentProfile: userProfile });
+    } catch (error) {
+        erreurCall(error, res);
+    }
+}
 
 exports.login = async (req, res, userRegister = null, messageRegister = null) => {
     // Si j'ai tous les éléments nécessaires (email et pwd)
@@ -76,9 +90,8 @@ exports.register = async (req, res) => {
     }
 }
 
-// 
+// Methode de récupération des infos du user
 exports.getInfo = async (req, res) => {
-   
     try {
         const id = res.locals.id;
         const user = await User.findByPk(id);
