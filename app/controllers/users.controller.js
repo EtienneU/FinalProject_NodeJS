@@ -1,40 +1,40 @@
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const { User } = require('../models/db');
-// const jwt = require("../services/auth.services");
+const erreurCall = require('../services/call.services');
+const privateKey = require('../config/privatekey');
 
 exports.login = async (req, res) => {
+    // Si j'ai tous les éléments nécessaires (email et pwd)
+    if (req.body.email && req.body.password) {
+        try {
+            // récupérer le user avec le parametre email
+            const user = await User.findOne({ where: { email: req.body.email } });
+            // si user == undefined
+            if (!user) {
+                return res.status(404).res.json({ "message": "Aucun utilisateur n'existe avec ces identifiants." });
+            }
+            // On compare nos mots de passe
+            const verifyPassword = bcrypt.compareSync(req.body.password, user.password); // retourne true ou false
+            if (!verifyPassword) {
+                const message = `Mot de passe incorrect.`;
+                res.status(401).json({ message });
+            } else { // ok : on retourne le user en ajoutant le token associé à sa connexion
+                const token = jwt.sign({userId : user.id}, privateKey.privateKey, {expiresIn : '12h'});
+                // let student = await user.getStudent() // si l'association User-Student existe
+                const message = `Identification réussie - Récupérer le token pour vos futures requetes sur l'API`;
+                res.json({ message, data: user, token});
+            }
 
-    try {
-        //trouver le user avec le parametre email == req.body.email
-        const user = await User.findOne({ where: { email: req.body.email } });
-
-        if (!user) {
-            res.status(404);
-            res.json({ "message": "Aucun utilisateur n'existe avec cet email" })
-            return;
+        } catch (e) {
+            // erreur système
+            erreurCall(e, res);
         }
-
-        if (req.body.password == user.dataValues.password) {
-        
-            //recuperer le student qui est en relation avec notre user : la methode getStudent() est automatiquement genérée par Sequelize suivant la relation défnie auparavant 
-            let student = await user.getStudent()
-            let token = jwt.signToken(user.dataValues.id);
-
-            res.json({user : user,
-                student: student,
-                token : token
-            });
-
-        } else {
-            res.status(401);
-            res.json({ "message": "Le mot de passe est erroné" })
-        }
-
-    } catch (e) {
-        res.status(500);
-            res.json({ "message": e })
+    } else {
+        // Erreur métier : il manque l'email ou le pwd
+        res.status(400).json(`Connexion echouée - Renseigner votre e-mail et votre mot de passe.`)
     }
 }
-
 
 exports.register = async (req, res) => {
 

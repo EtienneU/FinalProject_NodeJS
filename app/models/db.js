@@ -1,5 +1,6 @@
 // importation du module sequelize
 const { Sequelize, DataTypes } = require('sequelize'); // je crée un un objet qui contient Sequelize et Datatypes
+const bcrypt = require('bcryptjs');
 const dbConfig      = require('../config/db.config');
 const userModel     = require('./users.model');
 const studentModel  = require('./students.model');
@@ -30,17 +31,19 @@ const initDB = () => {
   // sequelize.sync() retourne une Promise
   // {force : true} est interdit en mode prod, mais pratique en mode dev
   // {force : true} me permet de RESET la DB (DROP IF EXISTS)
-  return sequelize.sync(/*{force : true}*/) 
+  return sequelize.sync({force : true}) 
     .then (_ => {
       console.log("Connection à la DB réussie");
       // Pour reinitialiser ma BD : activer {force : true} dans sync() et activer mes map ci dessous
       // Ajout d'étudiants dans la table student : je parcours mon tableau d'étudiants à insérer dans ma BD
-      // listeEtudiants.map(student => {
-      //   Student.create(student);
-      // });
-      // listeUsers.map(user => {
-      //   User.create(user);
-      // });
+
+      listeEtudiants.map(student => {
+        Student.create(student);
+      });
+      listeUsers.map(user => {
+        user.password = bcrypt.hashSync(user.password, 5) // MAJ de password en crypté
+        User.create(user);
+      });
     })
     .catch (error => {
       console.log("Erreur - connexion échouée DB" + error);
